@@ -3,7 +3,7 @@ from django import template
 from django.conf import settings
 from django.contrib.comments.templatetags.comments import CommentCountNode
 from comment_counter.utils import get_counter_cache_key
-from comment_counter.settings import DEFAULT_COUNTER_CACHE_TIMEOUT
+from comment_counter.settings import COMMENT_COUNTER_CACHE_TIMEOUT
 
 
 register = template.Library()
@@ -22,7 +22,7 @@ class CachedCommentCountNode(CommentCountNode):
         if count is None:
             qs = self.get_query_set(context)
             count = self.get_context_value_from_queryset(context, qs)
-            cache.set(cache_key, count, DEFAULT_COUNTER_CACHE_TIMEOUT)
+            cache.set(cache_key, count, COMMENT_COUNTER_CACHE_TIMEOUT)
 
         context[self.as_varname] = count
         return ''
